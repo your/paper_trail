@@ -802,7 +802,7 @@ sql> delete from versions where created_at < 2010-06-01;
 
 1. Install PaperTrail as a gem via your `Gemfile`:
 
-    `gem 'paper_trail', '~> 2'`
+    `gem 'paper_trail', '~> 2.7'`
 
 2. Generate a migration which will add a `versions` table to your database.
 
