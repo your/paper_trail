@@ -1,3 +1,5 @@
+require 'pry-nav'
+
 ENV["RAILS_ENV"] = "test"
 ENV["DB"] ||= "sqlite"
 
