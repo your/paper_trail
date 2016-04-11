@@ -1,3 +1,4 @@
+PaperTrail.serializer = PaperTrail::Serializers::YAML
 PaperTrail.config.track_associations = true
 
 module PaperTrail
