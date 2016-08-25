@@ -32,7 +32,6 @@ appraise "ar5" do
   gem "rspec-rails", "~> 3.5.1"
   gem 'rails-controller-testing'
 
-  # The AR5 version of PaperTrail is not compatible with sinatra 2 yet.
-  # Contributions welcome.
-  # gem "sinatra", "2.0.0.beta2"
+  # Testing the AR5 version of PaperTrail with sinatra 2.
+  gem "sinatra", "2.0.0.beta2"
 end
