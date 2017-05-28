@@ -123,6 +123,8 @@ module PaperTrail
       @model_class.class_attribute :version_class_name
       @model_class.version_class_name = options[:class_name] || "PaperTrail::Version"
 
+      verify_pk_type_match
+
       @model_class.class_attribute :versions_association_name
       @model_class.versions_association_name = options[:versions] || :versions
 
@@ -134,6 +136,15 @@ module PaperTrail
         class_name: @model_class.version_class_name,
         as: :item
       )
+    end
+
+    def verify_pk_type_match
+      unless version_class.columns_hash["item_id"].type.in?(
+        [:string, @model_class.columns_hash[@model_class.primary_key].type]
+      )
+        raise ::PaperTrail::UnsupportedModel,
+          "Model primary key type mismatch in the `versions` association."
+      end
     end
 
     # Adds callbacks to record changes to habtm associations such that on save

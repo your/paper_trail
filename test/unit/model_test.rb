@@ -1413,4 +1413,22 @@ class HasPaperTrailModelTest < ActiveSupport::TestCase
       assert_equal 3, @widget.versions.size
     end
   end
+
+  context "A model instance with primary key mismatching `item_id` in `versions` association" do
+    context "when `item_id` type is string" do
+      should "not raise an exception" do
+        assert_nothing_raised { CustomPrimaryKeyRecord.new }
+      end
+    end
+
+    context "when `item_id` type is other than string" do
+      should "raise an exception" do
+        assert_raise PaperTrail::UnsupportedModel do
+          Class.new(CustomPrimaryKeyRecord) do
+            has_paper_trail # with default versions table
+          end.new
+        end
+      end
+    end
+  end
 end
