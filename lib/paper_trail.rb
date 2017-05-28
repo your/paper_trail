@@ -1,6 +1,7 @@
 require "request_store"
 require "paper_trail/cleaner"
 require "paper_trail/config"
+require "paper_trail/errors"
 require "paper_trail/has_paper_trail"
 require "paper_trail/record_history"
 require "paper_trail/reifier"
