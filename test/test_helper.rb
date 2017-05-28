@@ -11,6 +11,18 @@ def using_mysql?
   @using_mysql ||= ActiveRecord::Base.connection_config[:adapter].to_sym == :mysql2
 end
 
+require "rails"
+ActiveSupport.on_load(:active_record) do
+  db_config = YAML.load_file(File.expand_path("../../test/dummy/config/database.yml", __FILE__))
+  ActiveRecord::Base.configurations = db_config || {}
+
+  ar_config = ActiveRecord::Base.configurations["test"]
+  ActiveRecord::Base.establish_connection(ar_config)
+
+  # Run any available migration
+  ActiveRecord::Migrator.migrate File.expand_path("../dummy/db/migrate/", __FILE__)
+end
+
 require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require "rails/test_help"
 require "shoulda"
@@ -27,9 +39,6 @@ if active_record_gem_version >= Gem::Version.new("5.0.0.beta1")
 end
 
 Rails.backtrace_cleaner.remove_silencers!
-
-# Run any available migration
-ActiveRecord::Migrator.migrate File.expand_path("../dummy/db/migrate/", __FILE__)
 
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
